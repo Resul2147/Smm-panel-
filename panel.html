@@ -1,130 +1,29 @@
-
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <title>SMM Panel</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-    }
-    header {
-      background: #1e293b;
-      padding: 22px;
-      text-align: center;
-    }
-    main {
-      padding: 25px;
-      text-align: center;
-    }
-    .card {
-      background: #1e293b;
-      border-radius: 15px;
-      padding: 25px;
-      margin: 20px auto;
-      max-width: 400px;
-    }
-    button {
-      background: #10b981;
-      border: none;
-      padding: 14px 25px;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h2>SMM PANEL</h2>
-    <p>Sosyal Medya Hizmet Platformu</p>
-  </header>
-  <main>
-    <h1>Hoş Geldiniz</h1>
-    <div class="card">
-      <h2>Hizmetlerimiz</h2>
-      <p>Instagram, TikTok, YouTube ve Telegram</p>
-      <button>Hizmetleri Keşfet</button>
-    </div>
-  </main>
-<section id="uyelik" style="max-width:420px;margin:30px auto;padding:24px;background:#1e293b;color:white;border-radius:16px;font-family:Arial">
-  <h2>Üye Ol / Giriş Yap</h2>
-  <input id="email" type="email" placeholder="E-posta adresi" style="width:100%;padding:12px;box-sizing:border-box;margin:8px 0">
-  <input id="password" type="password" placeholder="Şifre (en az 6 karakter)" style="width:100%;padding:12px;box-sizing:border-box;margin:8px 0">
-  <button onclick="uyeOl()">Üye Ol</button>
-  <button onclick="girisYap()">Giriş Yap</button>
-  <p id="mesaj" role="status"></p>
-</section>
-
-<section id="hesabim" style="display:none;text-align:center;color:white">
-  <h2>Müşteri Panelim</h2>
-  <p id="kullanici"></p>
-  <button onclick="cikisYap()">Çıkış Yap</button>
-</section>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://imfpobffhzxwijifisnz.supabase.co";
-const SUPABASE_KEY = "sb_publishable_dc991kHFEe7kBa96AefKyw_7cUV6leC";
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-console.log("Supabase bağlantısı oluşturuldu");
-
-window.addEventListener("error", function(event) {
-  alert("JavaScript hatası: " + event.message);
-});
-
-window.addEventListener("unhandledrejection", function(event) {
-  alert("Bağlantı hatası: " + String(event.reason?.message || event.reason));
-});
-const mesaj = document.getElementById("mesaj");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-
-async function uyeOl() {
-  const { error } = await db.auth.signUp({
-    email: email.value.trim(),
-    password: password.value
-  });
-  mesaj.textContent = error
-    ? error.message
-    : "Kayıt isteği alındı. Gerekirse e-postanı doğrula.";
-}
-
-async function girisYap() {
-  const { error } = await db.auth.signInWithPassword({
-    email: email.value.trim(),
-    password: password.value
-  });
-  if (error) mesaj.textContent = error.message;
-}
-
-async function cikisYap() {
-  await db.auth.signOut();
-}
-
-function ekranGuncelle(session) {
-  document.getElementById("uyelik").style.display =
-    session ? "none" : "block";
-  document.getElementById("hesabim").style.display =
-    session ? "block" : "none";
-  document.getElementById("kullanici").textContent =
-    session?.user?.email || "";
-}
-
-db.auth.onAuthStateChange((_event, session) => {
-  ekranGuncelle(session);
-});
-
-db.auth.getSession().then(({ data }) => {
-  ekranGuncelle(data.session);
-});
-</script>
-</body>
-  
-</html>
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SMM Panel</title>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0f172a;color:#f8fafc}header{background:#1e293b;padding:28px 16px;text-align:center}header h1{margin:0 0 8px}main{max-width:650px;margin:auto;padding:22px 16px}.card{background:#1e293b;padding:24px;border-radius:18px;margin:18px 0;box-shadow:0 8px 24px #0002}h2{margin-top:0}input{display:block;width:100%;padding:14px;margin:12px 0;background:#f8fafc;color:#0f172a;border:1px solid #94a3b8;border-radius:9px;font-size:16px}button{background:#10b981;color:white;border:0;border-radius:9px;padding:13px 17px;margin:4px 5px 4px 0;font-weight:700;font-size:15px;cursor:pointer}button:disabled{opacity:.5;cursor:wait}.secondary{background:#475569}.muted{color:#cbd5e1}#message{white-space:pre-wrap;line-height:1.5;min-height:22px}#message.error{color:#fda4af}#message.ok{color:#86efac}[hidden]{display:none!important}a{color:#6ee7b7}
+</style></head><body><header><h1>SMM PANEL</h1><p>Sosyal Medya Hizmet Platformu</p></header><main>
+<section class="card"><h2>Hoş Geldiniz</h2><p>Instagram, TikTok, YouTube ve Telegram hizmetleri için müşteri alanı.</p><button id="explore" type="button">Hizmetleri Keşfet</button></section>
+<section id="services" class="card" hidden><h2>Hizmetler</h2><p class="muted">Hizmet kataloğu henüz eklenmedi. Burada yalnızca üyelik sistemi aktiftir.</p></section>
+<section id="auth" class="card"><h2>Üye Ol / Giriş Yap</h2><label for="email">E-posta</label><input id="email" type="email" autocomplete="email" placeholder="E-posta adresiniz"><label for="password">Şifre</label><input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="En az 6 karakter"><button id="signup" type="button">Üye Ol</button><button id="signin" type="button">Giriş Yap</button><button id="reset" type="button" class="secondary">Şifremi Unuttum</button><p id="message" role="status" aria-live="polite"></p></section>
+<section id="account" class="card" hidden><h2>Müşteri Panelim</h2><p>Giriş yapılan hesap: <strong id="userEmail"></strong></p><p class="muted">Hizmet ve bakiye modülleri henüz kurulmadı.</p><button id="signout" type="button">Çıkış Yap</button></section>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script><script>
+'use strict';
+const SUPABASE_URL = 'https://imfpobffhzxwijifisnz.supabase.co';
+// Buraya Supabase > Project Settings > API Keys bölümündeki sb_publishable_ anahtarını girin.
+const SUPABASE_KEY = 'BURAYA_SB_PUBLISHABLE_ANAHTARINIZ';
+const $ = id => document.getElementById(id);
+let client = null;
+function message(text, error=false){$('message').textContent=text;$('message').className=error?'error':'ok';}
+function busy(value){for(const id of ['signup','signin','reset','signout'])$(id).disabled=value;}
+function showSession(session){const logged=!!session?.user;$('auth').hidden=logged;$('account').hidden=!logged;$('userEmail').textContent=session?.user?.email||'';}
+function errorText(error){const msg=String(error?.message||error||'Bilinmeyen hata');if(/rate limit|email.*limit|over_email_send_rate_limit/i.test(msg))return 'Supabase e-posta gönderim limiti dolmuş. Bir süre sonra tekrar deneyin veya Supabase üzerinden özel SMTP yapılandırın.';if(/invalid login credentials/i.test(msg))return 'E-posta veya şifre yanlış. E-postanızı doğrulamanız da gerekebilir.';if(/email not confirmed/i.test(msg))return 'Önce e-postanıza gelen doğrulama bağlantısına basın.';return msg;}
+function credentials(){const email=$('email').value.trim();const password=$('password').value;if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Geçerli bir e-posta adresi yazın.');if(password.length<6)throw Error('Şifre en az 6 karakter olmalı.');return {email,password};}
+async function run(action){if(!client){message('Supabase bağlantısı hazır değil. API ayarlarını kontrol edin.',true);return;}busy(true);message('İşlem yapılıyor...');try{await action();}catch(e){message(errorText(e),true);}finally{busy(false);}}
+$('explore').addEventListener('click',()=>{$('services').hidden=!$('services').hidden;$('services').scrollIntoView({behavior:'smooth'});});
+$('signup').addEventListener('click',()=>run(async()=>{const {email,password}=credentials();const {data,error}=await client.auth.signUp({email,password});if(error)throw error;if(data.session){showSession(data.session);message('Hesap oluşturuldu ve giriş yapıldı.');}else{message('Kayıt isteği alındı. E-posta doğrulaması açıksa gelen kutunuzu kontrol edin.');}}));
+$('signin').addEventListener('click',()=>run(async()=>{const {email,password}=credentials();const {data,error}=await client.auth.signInWithPassword({email,password});if(error)throw error;showSession(data.session);message('Giriş başarılı.');}));
+$('reset').addEventListener('click',()=>run(async()=>{const email=$('email').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Önce e-posta adresinizi yazın.');const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;message('Şifre sıfırlama isteği alındı. E-posta kutunuzu kontrol edin.');}));
+$('signout').addEventListener('click',()=>run(async()=>{const {error}=await client.auth.signOut();if(error)throw error;showSession(null);message('Çıkış yapıldı.');}));
+try{if(!window.supabase?.createClient)throw Error('Supabase kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin.');if(SUPABASE_KEY.startsWith('BURAYA_'))throw Error('Önce Supabase yayınlanabilir API anahtarını ekleyin.');client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);client.auth.onAuthStateChange((_event,session)=>showSession(session));client.auth.getSession().then(({data,error})=>{if(error)message(errorText(error),true);else showSession(data.session);}).catch(e=>message(errorText(e),true));}catch(e){message(errorText(e),true);}
+</script></body></html>

@@ -52,7 +52,6 @@
       <button>Hizmetleri Keşfet</button>
     </div>
   </main>
-</body>
 <section id="uyelik" style="max-width:420px;margin:30px auto;padding:24px;background:#1e293b;color:white;border-radius:16px;font-family:Arial">
   <h2>Üye Ol / Giriş Yap</h2>
   <input id="email" type="email" placeholder="E-posta adresi" style="width:100%;padding:12px;box-sizing:border-box;margin:8px 0">
@@ -70,8 +69,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "BURAYA_PROJE_URL";
-const SUPABASE_KEY = "BURAYA_PUBLISHABLE_KEY";
+const SUPABASE_URL = "https://imfpobffhzxwijifisnz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_dc991kHFEe7kBa96AefKyw_7cUV6leC";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const mesaj = document.getElementById("mesaj");
@@ -117,5 +116,6 @@ db.auth.getSession().then(({ data }) => {
   ekranGuncelle(data.session);
 });
 </script>
+</body>
   
 </html>

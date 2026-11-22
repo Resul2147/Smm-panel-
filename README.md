@@ -1,4 +1,4 @@
-# SMM Panel Pro
+# TakipMira
 
 Türkçe, mobil uyumlu GitHub Pages + Supabase başlangıç paneli.
 
@@ -15,3 +15,6 @@ Bu sürümde ödeme alma, bakiye yükleme ve otomatik sosyal medya teslimatı **
 
 ## Güvenlik
 RLS ve sipariş fiyatının veritabanında hesaplanması `setup.sql` içindedir. `config.js` yalnızca Supabase publishable key içermelidir. Testleri tamamlamadan gerçek müşteri veya ödeme kabul etmeyin.
+
+## Marka
+Çalışma adı: TakipMira. Alan adı/marka tescil uygunluğu doğrulanmadı; herhangi bir alan adı satın alınmadı.

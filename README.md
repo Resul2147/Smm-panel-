@@ -1,4 +1,4 @@
-# Takipzo
+# TakipVox
 
 Türkçe, mobil uyumlu GitHub Pages + Supabase başlangıç paneli.
 
@@ -17,7 +17,7 @@ Bu sürümde ödeme alma, bakiye yükleme ve otomatik sosyal medya teslimatı **
 RLS ve sipariş fiyatının veritabanında hesaplanması `setup.sql` içindedir. `config.js` yalnızca Supabase publishable key içermelidir. Testleri tamamlamadan gerçek müşteri veya ödeme kabul etmeyin.
 
 ## Marka
-Çalışma adı: Takipzo. Alan adı/marka tescil uygunluğu doğrulanmadı; herhangi bir alan adı satın alınmadı.
+Çalışma adı: TakipVox. Alan adı/marka tescil uygunluğu doğrulanmadı; herhangi bir alan adı satın alınmadı.
 
 ## Tamamlama durumu
 GitHub kodları güncellendi. Supabase publishable API anahtarı ve SQL kurulumu tamamlanmadan üyelik/siparişler canlı çalışmaz. GitHub Pages yayını ayrıca etkin olmalıdır. Marka ve alan adı uygunluğu doğrulanmadı.

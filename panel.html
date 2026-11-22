@@ -73,6 +73,15 @@ const SUPABASE_URL = "https://imfpobffhzxwijifisnz.supabase.co";
 const SUPABASE_KEY = "sb_publishable_dc991kHFEe7kBa96AefKyw_7cUV6leC";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+console.log("Supabase bağlantısı oluşturuldu");
+
+window.addEventListener("error", function(event) {
+  alert("JavaScript hatası: " + event.message);
+});
+
+window.addEventListener("unhandledrejection", function(event) {
+  alert("Bağlantı hatası: " + String(event.reason?.message || event.reason));
+});
 const mesaj = document.getElementById("mesaj");
 const email = document.getElementById("email");
 const password = document.getElementById("password");

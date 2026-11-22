@@ -53,4 +53,69 @@
     </div>
   </main>
 </body>
+<section id="uyelik" style="max-width:420px;margin:30px auto;padding:24px;background:#1e293b;color:white;border-radius:16px;font-family:Arial">
+  <h2>Üye Ol / Giriş Yap</h2>
+  <input id="email" type="email" placeholder="E-posta adresi" style="width:100%;padding:12px;box-sizing:border-box;margin:8px 0">
+  <input id="password" type="password" placeholder="Şifre (en az 6 karakter)" style="width:100%;padding:12px;box-sizing:border-box;margin:8px 0">
+  <button onclick="uyeOl()">Üye Ol</button>
+  <button onclick="girisYap()">Giriş Yap</button>
+  <p id="mesaj" role="status"></p>
+</section>
+
+<section id="hesabim" style="display:none;text-align:center;color:white">
+  <h2>Müşteri Panelim</h2>
+  <p id="kullanici"></p>
+  <button onclick="cikisYap()">Çıkış Yap</button>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "BURAYA_PROJE_URL";
+const SUPABASE_KEY = "BURAYA_PUBLISHABLE_KEY";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const mesaj = document.getElementById("mesaj");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
+async function uyeOl() {
+  const { error } = await db.auth.signUp({
+    email: email.value.trim(),
+    password: password.value
+  });
+  mesaj.textContent = error
+    ? error.message
+    : "Kayıt isteği alındı. Gerekirse e-postanı doğrula.";
+}
+
+async function girisYap() {
+  const { error } = await db.auth.signInWithPassword({
+    email: email.value.trim(),
+    password: password.value
+  });
+  if (error) mesaj.textContent = error.message;
+}
+
+async function cikisYap() {
+  await db.auth.signOut();
+}
+
+function ekranGuncelle(session) {
+  document.getElementById("uyelik").style.display =
+    session ? "none" : "block";
+  document.getElementById("hesabim").style.display =
+    session ? "block" : "none";
+  document.getElementById("kullanici").textContent =
+    session?.user?.email || "";
+}
+
+db.auth.onAuthStateChange((_event, session) => {
+  ekranGuncelle(session);
+});
+
+db.auth.getSession().then(({ data }) => {
+  ekranGuncelle(data.session);
+});
+</script>
+  
 </html>

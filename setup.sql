@@ -42,3 +42,14 @@ grant execute on function public.create_order(uuid,text,integer) to authenticate
 -- Yönetici yapmak için, kayıt sonrasında kendi e-postanızı girerek ayrıca çalıştırın:
 -- update public.profiles set is_admin=true where id=(select id from auth.users where email='SIZIN_EPOSTANIZ');
 -- Gerçek ödeme ve otomatik teslimat entegre değildir.
+
+-- Başlangıç hizmet kataloğu: yalnızca meşru içerik ve hesap danışmanlığı
+insert into public.services(name,category,price,active)
+select seed.name,seed.category,seed.price,true
+from (values
+ ('Instagram Profil Analizi','Instagram',149.00::numeric),
+ ('TikTok İçerik Planı','TikTok',199.00::numeric),
+ ('YouTube Kanal Analizi','YouTube',249.00::numeric),
+ ('Sosyal Medya İçerik Danışmanlığı','Genel',299.00::numeric)
+) as seed(name,category,price)
+where not exists(select 1 from public.services s where s.name=seed.name);
